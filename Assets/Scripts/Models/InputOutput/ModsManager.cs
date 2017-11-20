@@ -19,7 +19,7 @@ public class ModsManager
     {
         mods = GetModsFiles();
 
-        LoadSharedFiles();
+        new System.Threading.Thread(() => LoadSharedFiles()).Start();
 
         if (SceneController.IsAtIntroScene())
         {
@@ -111,21 +111,61 @@ public class ModsManager
 
     private void LoadSharedFiles()
     {
+        System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+        System.Diagnostics.Stopwatch sw_tot = new System.Diagnostics.Stopwatch();
+        sw.Start();
+        sw_tot.Start();
+
         LoadDirectoryAssets("Shared/Images", SpriteManager.LoadSpriteFiles);
+        UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - Shared/Images - Elapsed milliseconds: " + sw.ElapsedMilliseconds);
+        sw.Reset();
+        sw.Start();
         LoadDirectoryAssets("Shared/Audio", AudioManager.LoadAudioFiles);
+        UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - Shared/Audio - Elapsed milliseconds: " + sw.ElapsedMilliseconds);
+        sw.Reset();
+        sw.Start();
 
         LoadFunctions("CommandFunctions.cs", "DevConsole");
+        UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - CommandFunctions.cs - Elapsed milliseconds: " + sw.ElapsedMilliseconds);
+        sw.Reset();
+        sw.Start();
         LoadFunctions("ConsoleCommands.lua", "DevConsole");
+        UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - ConsoleCommands.lua - Elapsed milliseconds: " + sw.ElapsedMilliseconds);
+        sw.Reset();
+        sw.Start();
 
         LoadPrototypes("ConsoleCommands.xml", PrototypeManager.DevConsole.LoadPrototypes);
+        UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - ConsoleCommands.xml - Elapsed milliseconds: " + sw.ElapsedMilliseconds);
+        sw.Reset();
+        sw.Start();
         LoadPrototypes("SettingsTemplate.xml", PrototypeManager.SettingsCategories.LoadPrototypes);
+        UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - SettingsTemplate.xml - Elapsed milliseconds: " + sw.ElapsedMilliseconds);
+        sw.Reset();
+        sw.Start();
         LoadPrototypes("PerformanceHUDComponentGroups.xml", PrototypeManager.PerformanceHUD.LoadPrototypes);
+        UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - PerformanceHUDComponentGroups.xml - Elapsed milliseconds: " + sw.ElapsedMilliseconds);
+        sw.Reset();
+        sw.Start();
 
         LoadFunctions("SettingsMenuFunctions.cs", "SettingsMenu");
+        UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - SettingsMenuFunctions.cs - Elapsed milliseconds: " + sw.ElapsedMilliseconds);
+        sw.Reset();
+        sw.Start();
         LoadFunctions("SettingsMenuCommands.lua", "SettingsMenu");
+        UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - SettingsMenuCommands.lua - Elapsed milliseconds: " + sw.ElapsedMilliseconds);
+        sw.Reset();
+        sw.Start();
 
         LoadFunctions("PerformanceHUDFunctions.cs", "PerformanceHUD");
+        UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - PerformanceHUDFunctions.cs - Elapsed milliseconds: " + sw.ElapsedMilliseconds);
+        sw.Reset();
+        sw.Start();
         LoadFunctions("PerformanceHUDCommands.lua", "PerformanceHUD");
+        UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - PerformanceHUDCommands.lua - Elapsed milliseconds: " + sw.ElapsedMilliseconds);
+        sw.Reset();
+        sw.Start();
+
+        UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - Total elapsed milliseconds: " + sw_tot.ElapsedMilliseconds);
     }
 
     /// <summary>
