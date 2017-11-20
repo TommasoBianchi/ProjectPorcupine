@@ -15,6 +15,8 @@ public class ModsManager
 {
     private DirectoryInfo[] mods;
 
+    private static String streamingAssetsPath = Application.streamingAssetsPath;
+
     public ModsManager()
     {
         mods = GetModsFiles();
@@ -63,7 +65,7 @@ public class ModsManager
     /// </summary>
     private static string GetPathToModsFolder()
     {
-        return Path.Combine(Path.Combine(Application.streamingAssetsPath, "Data"), "Mods");
+        return Path.Combine(Path.Combine(streamingAssetsPath, "Data"), "Mods");
     }
 
     private void LoadMainSceneFiles()
@@ -117,55 +119,55 @@ public class ModsManager
         sw_tot.Start();
 
         LoadDirectoryAssets("Shared/Images", SpriteManager.LoadSpriteFiles);
-        UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - Shared/Images - Elapsed milliseconds: " + sw.ElapsedMilliseconds);
+        //UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - Shared/Images - Elapsed milliseconds: " + sw.ElapsedMilliseconds);
         sw.Reset();
         sw.Start();
         LoadDirectoryAssets("Shared/Audio", AudioManager.LoadAudioFiles);
-        UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - Shared/Audio - Elapsed milliseconds: " + sw.ElapsedMilliseconds);
+        //UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - Shared/Audio - Elapsed milliseconds: " + sw.ElapsedMilliseconds);
         sw.Reset();
         sw.Start();
 
         LoadFunctions("CommandFunctions.cs", "DevConsole");
-        UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - CommandFunctions.cs - Elapsed milliseconds: " + sw.ElapsedMilliseconds);
+        //UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - CommandFunctions.cs - Elapsed milliseconds: " + sw.ElapsedMilliseconds);
         sw.Reset();
         sw.Start();
         LoadFunctions("ConsoleCommands.lua", "DevConsole");
-        UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - ConsoleCommands.lua - Elapsed milliseconds: " + sw.ElapsedMilliseconds);
+        //nityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - ConsoleCommands.lua - Elapsed milliseconds: " + sw.ElapsedMilliseconds);
         sw.Reset();
         sw.Start();
 
         LoadPrototypes("ConsoleCommands.xml", PrototypeManager.DevConsole.LoadPrototypes);
-        UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - ConsoleCommands.xml - Elapsed milliseconds: " + sw.ElapsedMilliseconds);
+        //UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - ConsoleCommands.xml - Elapsed milliseconds: " + sw.ElapsedMilliseconds);
         sw.Reset();
         sw.Start();
         LoadPrototypes("SettingsTemplate.xml", PrototypeManager.SettingsCategories.LoadPrototypes);
-        UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - SettingsTemplate.xml - Elapsed milliseconds: " + sw.ElapsedMilliseconds);
+        //UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - SettingsTemplate.xml - Elapsed milliseconds: " + sw.ElapsedMilliseconds);
         sw.Reset();
         sw.Start();
         LoadPrototypes("PerformanceHUDComponentGroups.xml", PrototypeManager.PerformanceHUD.LoadPrototypes);
-        UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - PerformanceHUDComponentGroups.xml - Elapsed milliseconds: " + sw.ElapsedMilliseconds);
+        //UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - PerformanceHUDComponentGroups.xml - Elapsed milliseconds: " + sw.ElapsedMilliseconds);
         sw.Reset();
         sw.Start();
 
         LoadFunctions("SettingsMenuFunctions.cs", "SettingsMenu");
-        UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - SettingsMenuFunctions.cs - Elapsed milliseconds: " + sw.ElapsedMilliseconds);
+        //UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - SettingsMenuFunctions.cs - Elapsed milliseconds: " + sw.ElapsedMilliseconds);
         sw.Reset();
         sw.Start();
         LoadFunctions("SettingsMenuCommands.lua", "SettingsMenu");
-        UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - SettingsMenuCommands.lua - Elapsed milliseconds: " + sw.ElapsedMilliseconds);
+        //UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - SettingsMenuCommands.lua - Elapsed milliseconds: " + sw.ElapsedMilliseconds);
         sw.Reset();
         sw.Start();
 
         LoadFunctions("PerformanceHUDFunctions.cs", "PerformanceHUD");
-        UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - PerformanceHUDFunctions.cs - Elapsed milliseconds: " + sw.ElapsedMilliseconds);
+        //UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - PerformanceHUDFunctions.cs - Elapsed milliseconds: " + sw.ElapsedMilliseconds);
         sw.Reset();
         sw.Start();
         LoadFunctions("PerformanceHUDCommands.lua", "PerformanceHUD");
-        UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - PerformanceHUDCommands.lua - Elapsed milliseconds: " + sw.ElapsedMilliseconds);
+        //UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - PerformanceHUDCommands.lua - Elapsed milliseconds: " + sw.ElapsedMilliseconds);
         sw.Reset();
         sw.Start();
 
-        UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - Total elapsed milliseconds: " + sw_tot.ElapsedMilliseconds);
+        //UnityDebugger.Debugger.LogWarning("ModsManager::LoadSharedFiles() - Total elapsed milliseconds: " + sw_tot.ElapsedMilliseconds);
     }
 
     /// <summary>
@@ -244,7 +246,7 @@ public class ModsManager
     /// <param name="readText">Called to handle the text reading and actual loading.</param>
     private void LoadTextFile(string directoryName, string fileName, Action<string> readText)
     {
-        string filePath = Path.Combine(Application.streamingAssetsPath, directoryName);
+        string filePath = Path.Combine(streamingAssetsPath, directoryName);
         filePath = Path.Combine(filePath, fileName);
         if (File.Exists(filePath))
         {
@@ -272,14 +274,14 @@ public class ModsManager
     /// <param name="readDirectory">Called to handle the loading of each file in the given directory.</param>
     private void LoadDirectoryAssets(string directoryName, Action<string> readDirectory)
     {
-        string directoryPath = Path.Combine(Application.streamingAssetsPath, directoryName);
+        string directoryPath = Path.Combine(streamingAssetsPath, directoryName);
         if (Directory.Exists(directoryPath))
         {
             readDirectory(directoryPath);
         }
         else
         {
-            UnityDebugger.Debugger.LogError("Directory at " + directoryPath + " not found");
+            //UnityDebugger.Debugger.LogError("Directory at " + directoryPath + " not found");
         }
 
         foreach (DirectoryInfo mod in mods)
