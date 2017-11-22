@@ -36,11 +36,11 @@ public class FurnitureSpriteController : BaseSpriteController<Furniture>
         // Register our callback so that our GameObject gets updated whenever
         // the tile's type changes.
         world.FurnitureManager.Created += OnCreated;
-
+        
         // Go through any EXISTING furniture (i.e. from a save that was loaded OnEnable) and call the OnCreated event manually.
         foreach (Furniture furniture in world.FurnitureManager)
         {
-            OnCreated(furniture);
+            InitializationManager.EnqueueWork(() => OnCreated(furniture));
         }
     }
 

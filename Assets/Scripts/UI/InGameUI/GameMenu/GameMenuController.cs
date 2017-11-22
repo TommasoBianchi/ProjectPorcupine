@@ -32,6 +32,11 @@ public class GameMenuController : MonoBehaviour
     // Use this for initialization.
     private void Start()
     {
+        InitializationManager.EnqueueWork(Initialize);
+    }
+
+    private void Initialize()
+    {
         menuLeft = GameObject.Find("MenuLeft").GetComponent<MenuLeft>();
         buttonPrefab = Resources.Load("UI/MenuButton");
 

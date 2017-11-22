@@ -69,6 +69,11 @@ public class WorldController : MonoBehaviour
 
     public void OnEnable()
     {
+        InitializationManager.EnqueueWork(_OnEnable);
+    }
+
+    private void _OnEnable()
+    {
         if (Instance == null || Instance == this)
         {
             Instance = this;
@@ -112,24 +117,14 @@ public class WorldController : MonoBehaviour
     {
         // Create GameObject so we can have access to a transform which has a position of "Vector3.zero".
         new GameObject("VisualPath", typeof(VisualPath));
-        GameObject go;
 
-        TileSpriteController = new TileSpriteController(World);
-        CharacterSpriteController = new CharacterSpriteController(World);
-        FurnitureSpriteController = new FurnitureSpriteController(World);
-        UtilitySpriteController = new UtilitySpriteController(World);
-        JobSpriteController = new JobSpriteController(World, FurnitureSpriteController, UtilitySpriteController);
-        InventorySpriteController = new InventorySpriteController(World, inventoryUI);
-        ShipSpriteController = new ShipSpriteController(World);
+        InstantiateControllers();
+        InitializationManager.EnqueueWork(() => Initialize());
+        InitializationManager.Initialize();
+    }
 
-        BuildModeController = new BuildModeController();
-        SpawnInventoryController = new SpawnInventoryController();
-        MouseController = new MouseController(BuildModeController, FurnitureSpriteController, UtilitySpriteController, circleCursorPrefab);
-        QuestController = new QuestController();
-        CameraController = new CameraController();
-        TradeController = new TradeController();
-        AutosaveManager = new AutosaveManager();
-
+    private void Initialize()
+    {
         // Register inputs actions
         KeyboardManager.Instance.RegisterInputAction("DevMode", KeyboardMappedInputType.KeyDown, ChangeDevMode);
 
@@ -140,7 +135,7 @@ public class WorldController : MonoBehaviour
 
         // Initialising controllers.
         GameObject canvas = GameObject.Find("Canvas");
-        go = Instantiate(Resources.Load("UI/ContextMenu"), canvas.transform.position, canvas.transform.rotation, canvas.transform) as GameObject;
+        GameObject go = Instantiate(Resources.Load("UI/ContextMenu"), canvas.transform.position, canvas.transform.rotation, canvas.transform) as GameObject;
         go.name = "ContextMenu";
 
         GameObject timeScale = Instantiate(Resources.Load("UI/TimeScale"), GameObject.Find("TopRight").transform, false) as GameObject;
@@ -176,6 +171,25 @@ public class WorldController : MonoBehaviour
             devConsole.SetActive(true);
             DeveloperConsole.DevConsole.Close();
         }
+    }
+
+    private void InstantiateControllers()
+    {
+        InitializationManager.EnqueueWork(() => TileSpriteController = new TileSpriteController(World));
+        InitializationManager.EnqueueWork(() => CharacterSpriteController = new CharacterSpriteController(World));
+        InitializationManager.EnqueueWork(() => FurnitureSpriteController = new FurnitureSpriteController(World));
+        InitializationManager.EnqueueWork(() => UtilitySpriteController = new UtilitySpriteController(World));
+        InitializationManager.EnqueueWork(() => JobSpriteController = new JobSpriteController(World, FurnitureSpriteController, UtilitySpriteController));
+        InitializationManager.EnqueueWork(() => InventorySpriteController = new InventorySpriteController(World, inventoryUI));
+        InitializationManager.EnqueueWork(() => ShipSpriteController = new ShipSpriteController(World));
+
+        InitializationManager.EnqueueWork(() => BuildModeController = new BuildModeController());
+        InitializationManager.EnqueueWork(() => SpawnInventoryController = new SpawnInventoryController());
+        InitializationManager.EnqueueWork(() => MouseController = new MouseController(BuildModeController, FurnitureSpriteController, UtilitySpriteController, circleCursorPrefab));
+        InitializationManager.EnqueueWork(() => QuestController = new QuestController());
+        InitializationManager.EnqueueWork(() => CameraController = new CameraController());
+        InitializationManager.EnqueueWork(() => TradeController = new TradeController());
+        InitializationManager.EnqueueWork(() => AutosaveManager = new AutosaveManager());
     }
 
     /// <summary>

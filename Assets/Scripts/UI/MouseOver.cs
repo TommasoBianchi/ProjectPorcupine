@@ -44,6 +44,11 @@ public abstract class MouseOver : MonoBehaviour
     // Use this for initialization.
     private void Start()
     {
+        InitializationManager.EnqueueWork(Initialize);
+    }
+
+    private void Initialize()
+    {
         text = GetComponent<Text>();
 
         if (text == null)

@@ -19,8 +19,8 @@ public class SpawnInventoryController
 
     public SpawnInventoryController()
     {
-        CreateSpawnUI();
-        CreateInventoryEntries();
+        InitializationManager.EnqueueWork(() => CreateSpawnUI());
+        InitializationManager.EnqueueWork(() => CreateInventoryEntries());
     }
 
     public string InventoryToBuild { get; protected set; }

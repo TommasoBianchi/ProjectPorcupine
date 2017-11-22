@@ -26,7 +26,7 @@ public class TileSpriteController : BaseSpriteController<Tile>
                 for (int z = 0; z < world.Depth; z++)
                 {
                     Tile tile = world.GetTileAt(x, y, z);
-                    OnCreated(tile);
+                    InitializationManager.EnqueueWork(() => OnCreated(tile));
                 }
             }
         }
